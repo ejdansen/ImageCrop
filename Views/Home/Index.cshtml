@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model UploadViewModel
+<form asp-action="Index" enctype="multipart/form-data" method="post">
+    <fieldset>
+             <select name="shape">
+                <option value="">Select a shape</option>
+                <option value="square">Square</option>
+                <option value="wide">Wide</option>
+                <option value="tall">Tall</option>
+            </select><br>
+            <label asp-for="scale">Scale image 0-1</label><br>
+            <input asp-for="scale" type="number" min="0" max="1" step="0.1"><br>
+            <label asp-for="MyImage">Select Image</label><br>
+            <input asp-for="MyImage" type="file"><br>
+    </fieldset>
+    <input class="btn" type="submit" value="Upload" />
+</form>
