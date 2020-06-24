@@ -24,12 +24,12 @@ namespace ImageCrop.Models
             switch(shape)
             {
                 case "wide":
-                    s.Height = System.Convert.ToInt32(s.Height*(2.0/3.0));
+                    s.Height = (int) (s.Height*(2.0/3.0));
                     targetW = 300;
                     targetH = 200;
                     break;
                 case "tall":
-                    s.Width = System.Convert.ToInt32(s.Width*(2.0/3.0));
+                    s.Width = (int) (s.Width*(2.0/3.0));
                     targetW = 200;
                     targetH = 300;
                     break;
@@ -47,8 +47,8 @@ namespace ImageCrop.Models
             } else {
                 maxW = maxH;
             }
-            int scaledW = System.Convert.ToInt32(maxW*scale);
-            int scaledH = System.Convert.ToInt32(maxH*scale);
+            int scaledW = (int) (maxW*scale);
+            int scaledH = (int) (maxH*scale);
             return new Size(scaledW, scaledH);
         }
 
