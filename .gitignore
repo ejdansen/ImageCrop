@@ -27,6 +27,13 @@
 *.sqlite
 *.cache
 
+# Image files #
+################
+*.jpg
+*.tiff
+*.png
+*.bmp
+
 # OS generated files #
 ######################
 .DS_Store
