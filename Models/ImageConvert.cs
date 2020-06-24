@@ -16,6 +16,7 @@ namespace ImageCrop.Models
         {
             
             Rectangle r = new Rectangle();
+            scale = scale/10.0;
             //square default
             Size s = GetSquare(scale);
             int targetW = 300;
