@@ -1,69 +1,61 @@
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace ImageCrop.Models 
 {
     public class ImageConvert
     {
         Bitmap bitmap;
-        Bitmap cropped;
+
+        public Dictionary<string, double> TargetAspectWHDict;
 
         public ImageConvert(Image image)
         {
-            this.bitmap = new Bitmap(image);          
+            this.bitmap = new Bitmap(image); 
+            TargetAspectWHDict = new Dictionary<string, double>();
+            TargetAspectWHDict.Add("wide", 3.0/2.0);
+            TargetAspectWHDict.Add("tall", 2.0/3.0);
+            TargetAspectWHDict.Add("square", 1.0);         
         }
 
-        public void ConvertImage(string shape, double scale)
+        //scale 1-100, shape wide,tall,square
+        public Bitmap ConvertImage(string shape, double scale)
         {
-            
-            Rectangle r = new Rectangle();
-            scale = scale/10.0;
-            //square default
-            Size s = GetSquare(scale);
-            int targetW = 300;
-            int targetH = 300;
-            switch(shape)
+
+            double targetAspectRatioWH;
+            TargetAspectWHDict.TryGetValue(shape, out targetAspectRatioWH);
+            float originAspectRatioWH = (float) bitmap.Width/bitmap.Height;         
+            Size s = new Size(bitmap.Width, bitmap.Height);
+            //cut width if image is wider than target
+            if (targetAspectRatioWH < (double) originAspectRatioWH)
             {
-                case "wide":
-                    s.Height = (int) (s.Height*(2.0/3.0));
-                    targetW = 300;
-                    targetH = 200;
-                    break;
-                case "tall":
-                    s.Width = (int) (s.Width*(2.0/3.0));
-                    targetW = 200;
-                    targetH = 300;
-                    break;
-            } 
-            r = new Rectangle(GetCenterCrop(s), s);            
-            cropped = new Bitmap(bitmap.Clone(r, bitmap.PixelFormat), targetW, targetH);          
-        }
-
-        public Size GetSquare(double scale) 
-        {
-            double maxW = bitmap.Width;
-            double maxH = bitmap.Height;
-            if (maxW < maxH) {
-                maxH = maxW;
-            } else {
-                maxW = maxH;
+                double WnormOrig = (double) bitmap.Width/bitmap.Height;
+                double WnormTarget = targetAspectRatioWH;
+                double fractionToRemove = (WnormOrig - WnormTarget)/WnormOrig;
+                int numPixToCrop = (int) (fractionToRemove*bitmap.Width);
+                s.Width = bitmap.Width - numPixToCrop;
+                s.Height = bitmap.Height;
             }
-            int scaledW = (int) (maxW*scale);
-            int scaledH = (int) (maxH*scale);
-            return new Size(scaledW, scaledH);
-        }
 
-        public Point GetCenterCrop(Size s)
-        {
-            int wCenter = bitmap.Width/2;
-            int hCenter = bitmap.Height/2;
-            int wOffCenter = wCenter - s.Width/2;
-            int hOffCenter = hCenter - s.Height/2;
-            return (new Point(wOffCenter, hOffCenter));           
-        }
+            //cut height if image is taller than target
+            if (targetAspectRatioWH > originAspectRatioWH)
+            {
+                double HnormOrig = (double) bitmap.Height/bitmap.Width;
+                double HnormTarget = 1/targetAspectRatioWH;
+                double fractionToRemove = (HnormOrig - HnormTarget)/HnormOrig;
+                int numPixToCrop = (int) (fractionToRemove*bitmap.Height);
+                s.Height = bitmap.Height - numPixToCrop;
+                s.Width = bitmap.Width;
+            }
 
-        public Bitmap GetCroppedImage() 
-        { 
-            return cropped;
+            //default keep origin proportions
+            Point p = new Point((int) 0.5*(bitmap.Height - s.Height), (int) 0.5*(bitmap.Width - s.Width));
+            s.Width = (int) (s.Width*(scale/100));
+            // Discuss!
+            if (s.Width == 0) {s.Width = 1;}
+            s.Height = (int) (s.Height*(scale/100));
+            if (s.Height == 0) {s.Width = 1;}
+            return new Bitmap(bitmap.Clone(new Rectangle(p,s), bitmap.PixelFormat));          
         }
     }
 

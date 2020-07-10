@@ -11,10 +11,10 @@
                 <option value="wide">Wide</option>
                 <option value="tall">Tall</option>
             </select><br>
-            <label asp-for="scale">Scale image 1 to 10</label><br>
-            <input asp-for="scale" type="number" min="1" max="10" step="1"><br>
+            <label asp-for="scale">Scale cropped 10% to 100%</label><br>
+            <input asp-for="scale" type="number" value="100" min="10" max="100" step="10"><br>
             <label asp-for="MyImage">Select Image</label><br>
             <input asp-for="MyImage" type="file"><br>
     </fieldset>
-    <input class="btn" type="submit" value="Upload" />
+    <input type="submit" name="submit" value="Upload" />
 </form>

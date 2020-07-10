@@ -42,8 +42,7 @@ namespace ImageCrop.Controllers
             }
             Image image = GetBitmapFromImage(model.MyImage);
             ImageConvert conv = new ImageConvert(new Bitmap(image));
-            conv.ConvertImage(model.shape, model.scale);
-            conv.GetCroppedImage().Save("wwwroot/Images/Cropped.jpg" );
+            conv.ConvertImage(model.shape, model.scale).Save("wwwroot/Images/Cropped.jpg" );
             return RedirectToAction("ViewImage");
         }
 
