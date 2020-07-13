@@ -5,16 +5,34 @@
 @model UploadViewModel
 <form asp-action="Index" enctype="multipart/form-data" method="post">
     <fieldset>
-             <select name="shape">
-                <option value="">Select a shape</option>
-                <option value="square">Square</option>
-                <option value="wide">Wide</option>
-                <option value="tall">Tall</option>
-            </select><br>
-            <label asp-for="scale">Scale cropped 10% to 100%</label><br>
-            <input asp-for="scale" type="number" value="100" min="10" max="100" step="10"><br>
-            <label asp-for="MyImage">Select Image</label><br>
-            <input asp-for="MyImage" type="file"><br>
+        <div class="form-group row">
+            <label for="shape" >Select Shape</label>
+            <div class="col-md-10">
+                <select name="shape">
+                    <option value="square">Square</option>
+                    <option value="wide">Wide</option>
+                    <option value="extrawide">ExtraWide</option>
+                    <option value="tall">Tall</option>
+                    <option value="extratall">ExtraTall</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="scale">Scale output image 10% to 100%</label>
+            <div class="col-md-10">
+                <input asp-for="scale" type="number" value="100" min="10" max="100" step="10">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="MyImage">Select Image</label>
+            <div class="col-md-10">
+                <input asp-for="MyImage" type="file" required="required">
+            </div>
+        </div>
     </fieldset>
-    <input type="submit" name="submit" value="Upload" />
+    <div class="form-group row">
+        <div class="col-md-10">
+            <input type="submit" name="submit" value="Upload"/>
+        </div>
+    </div>
 </form>

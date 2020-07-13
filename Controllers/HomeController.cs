@@ -40,9 +40,15 @@ namespace ImageCrop.Controllers
                     return Image.FromStream(target);
                 }
             }
-            Image image = GetBitmapFromImage(model.MyImage);
-            ImageConvert conv = new ImageConvert(new Bitmap(image));
-            conv.ConvertImage(model.shape, model.scale).Save("wwwroot/Images/Cropped.jpg" );
+            try{
+                Image image = GetBitmapFromImage(model.MyImage); 
+                ImageConvert conv = new ImageConvert(new Bitmap(image));
+                conv.ConvertImage(model.shape, model.scale).Save("wwwroot/Images/Cropped.jpg" );
+            } catch (Exception e) {
+                _logger.LogError(e.Message);
+                return RedirectToAction("Error");
+            }
+            
             return RedirectToAction("ViewImage");
         }
 
