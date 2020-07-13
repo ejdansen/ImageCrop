@@ -21,7 +21,6 @@ namespace ImageCrop.Models
             TargetAspectWHDict.Add("square", 1.0);      
         }
 
-        //scale 1-100, shape wide,tall,square
         public Bitmap ConvertImage(string shape, double scale)
         {
 
