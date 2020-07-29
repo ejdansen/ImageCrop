@@ -49,7 +49,7 @@ namespace ImageCrop.Controllers
                 return RedirectToAction("Error");
             }
             
-            return RedirectToAction("ViewImage");
+            return View();
         }
 
 
