@@ -36,6 +36,10 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.12.4, )"
+            },
             "Microsoft.ML": {
               "target": "Package",
               "version": "[1.5.1, )"
@@ -43,6 +47,10 @@
             "Microsoft.ML.ImageAnalytics": {
               "target": "Package",
               "version": "[1.5.1, )"
+            },
+            "Microsoft.ML.OnnxRuntime.Managed": {
+              "target": "Package",
+              "version": "[1.4.0, )"
             },
             "Microsoft.ML.OnnxTransformer": {
               "target": "Package",
