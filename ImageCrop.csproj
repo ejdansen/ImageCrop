@@ -9,7 +9,7 @@
 
   <ItemGroup>
 
-    <PackageReference Include="Google.Protobuf" Version="3.12.4" />
+    <PackageReference Include="Google.Protobuf" Version="3.15.0" />
 
     <PackageReference Include="Microsoft.ML" Version="1.5.1" />
 
